@@ -1,5 +1,5 @@
 import log4js from 'log4js';
-import HttpServer from './HttpServer.js';
+import HttpServer from './server/HttpServer.js';
 
 log4js.configure({
     appenders: { cheese: { type: "file", filename: "cheese.log" } },

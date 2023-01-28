@@ -3,7 +3,7 @@ import log4js from 'log4js'
 const sqlite3 = s.verbose();
 
 log4js.configure({
-    appenders: { out: { type: "file", filename: "./sql.log" } },
+    appenders: { out: { type: "file", filename: "./sql/sql.log" } },
     categories: { default: { appenders: ["out"], level: "error" } },
 });
 
