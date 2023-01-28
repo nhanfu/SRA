@@ -1,5 +1,6 @@
-const sqlite3 = require('sqlite3').verbose();
-const log4js = require('log4js');
+import s from 'sqlite3';
+import log4js from 'log4js'
+const sqlite3 = s.verbose();
 
 log4js.configure({
     appenders: { out: { type: "file", filename: "./sql.log" } },
@@ -8,9 +9,9 @@ log4js.configure({
 
 const logger = log4js.getLogger();
 const appDb = './sql/app.db';
-instances = {};
+const instances = {};
 
-module.exports = class Sqlite {
+export default class Sqlite {
     constructor(dbPath) {
         this.dbPath = dbPath;
         this.db = new sqlite3.Database(dbPath || appDb, (err) => {

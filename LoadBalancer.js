@@ -1,8 +1,11 @@
-module.exports = class LoadBalanceServer {
+import Sqlite from 'sqlite3';
+import http from 'http';
+
+export default class LoadBalanceServer {
     constructor() {
-        this.sqlite3 = require('sqlite3').verbose();
+        this.sqlite3 = Sqlite.verbose();
         this.db = new this.sqlite3.Database('./sql/app.db');
-        this.http = require('http');
+        this.http = http;
         this.currentServerIndex = 0;
         this.targetServers = [];
     }

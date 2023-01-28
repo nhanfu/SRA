@@ -1,12 +1,18 @@
+import http from 'http';
+import url from 'url';
+import LoadBalancer from './LoadBalancer.js';
+import svRunner from './svRunner.js';
+import Sqlite from './sql/sqlite.js';
+
 var instance = null;
 
-module.exports = class HttpServer {
+export default class HttpServer {
     constructor() {
-        this.http = require('http');
-        this.url = require('url');
-        this.LoadBalanceServer = require('./LoadBalancer');
-        this.SvRunner = require('./svRunner');
-        this.db = require('./sql/sqlite').connect();
+        this.http = http;
+        this.url = url;
+        this.LoadBalanceServer = LoadBalancer;
+        this.SvRunner = svRunner;;
+        this.db = Sqlite.connect();
         this.svRunner = new this.SvRunner();
         this.loadBalanceServer = new this.LoadBalanceServer();
         this.svRunner.run();

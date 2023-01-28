@@ -1,9 +1,14 @@
-module.exports = class SvRunner {
+import vm from 'vm';
+import sqlite from 'sqlite3';
+import config from './config.js';
+import log4js from 'log4js';
+
+export default class SvRunner {
     constructor() {
-        this.vm = require('vm');
-        this.sqlite3 = require('sqlite3').verbose();
-        this.log4js = require('log4js');
-        this.config = require('./config.js');
+        this.vm = vm;
+        this.sqlite3 = sqlite.verbose();
+        this.log4js = log4js;
+        this.config = config;
         this.db = new this.sqlite3.Database(this.config.edi.sqlite);
         this.logger = this.log4js.getLogger();
         this.logger.level = "debug";
