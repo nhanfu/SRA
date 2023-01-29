@@ -7,6 +7,7 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+bun.lockb
 *.db-shm
 *.db-wal
 # Diagnostic reports (https://nodejs.org/api/report.html)
