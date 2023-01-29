@@ -5,6 +5,7 @@
   "description": "",
   "main": "./startup.js",
   "scripts": {
+    "dev": "node startup.js --inspect & node com/start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
