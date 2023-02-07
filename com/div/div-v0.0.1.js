@@ -1,9 +1,10 @@
-import Base from '../ngin/base.js';
 import { html, events } from '../ngin/html.js';
+import Base from '../ngin/base.js';
 
-export class Factory extends Base {
+export default class Factory extends Base {
     constructor(meta, env) {
-        super(meta, env);
+        this.meta = meta;
+        this.env = env;
     }
 
     render() {
@@ -11,13 +12,13 @@ export class Factory extends Base {
         if (meta.formId != null) {
             this.setEleFromTemplate();
         } else {
-            html.take(this.env.container).input.value(this.meta.val);
+            html.take(this.env.container).div.label.text(this.meta.label);
             this.ele = html.ctx;
         }
     }
 
     postRenderEvent(meta) {
-        html.take(this.ele).event(events.change, (e) => meta.events.change({ com: this, event: e }));
+        html.take(this.ele).event(events.click, (e) => meta.events.click({ com: this, event: e }));
     }
 
     static create(meta, env) { return new Factory(meta, env); }

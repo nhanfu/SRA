@@ -1,7 +1,7 @@
 import { html, events } from '../ngin/html.js';
+import Base from '../ngin/base.js';
 
-export class Factory {
-    #ele = null;
+export default class Factory extends Base {
     constructor(meta, env) {
         this.meta = meta;
         this.env = env;
@@ -9,12 +9,17 @@ export class Factory {
 
     render() {
         const meta = this.meta;
-        html.take(this.env.ele).button.text(this.meta.label)
-            .event(events.click, (e) => meta.events.click({ com: this, event: e }));
-        this.#ele = html.ctx;
+        if (meta.formId != null) {
+            this.setEleFromTemplate();
+        } else {
+            html.take(this.env.container).button.text(this.meta.label);
+            this.ele = html.ctx;
+        }
     }
 
-    get ele() { return this.#ele; }
+    postRenderEvent(meta) {
+        html.take(this.ele).event(events.change, (e) => meta.events.change({ com: this, event: e }));
+    }
 
     static create(meta, env) { return new Factory(meta, env); }
 }

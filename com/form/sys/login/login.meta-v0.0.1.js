@@ -1,31 +1,37 @@
 const meta = [
     {
-        com: '../button/button-v0.0.1.js',
-        get label() { return 'Test'; },
+        com: '../input/input-v0.0.1.js',
+        formId: 'username',
+        field: 'username',
+        parentId: 'form',
         events: {
-            click: (arg) => {
-                console.log(`This is the message from meta, the label text should be ${arg.com.ele.innerText}`);
+            change: (arg) => {
+                console.log(`Should login to the user ${arg.com.ele.value}`);
+            },
+            DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
+        }
+    },
+    {
+        com: '../input/input-v0.0.1.js',
+        parentId: 'form',
+        formId: 'password',
+        field: 'password',
+        events: {
+            change: (arg) => {
+                console.log(`Should login with the password ${arg.com.ele.value}`);
             }
         }
     },
     {
         com: '../button/button-v0.0.1.js',
-        get label() { return 'Test2'; },
+        parentId: 'form',
+        formId: 'submit',
         events: {
             click: (arg) => {
                 console.log(`This is another message`);
             }
         }
     },
-    {
-        com: '../input/input-v0.0.1.js',
-        get val() { return 'user name' },
-        events: {
-            change: (arg) => {
-                console.log(`Should login to the user ${arg.com.ele.value}`);
-            }
-        }
-    }
 ]
 
-export { meta }
+export default meta;

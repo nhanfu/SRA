@@ -168,7 +168,7 @@ const events = {
     wheel: 'wheel',
     compositionend: 'compositionend',
     compositionstart: 'compositionstart',
-    DOMContentLoade: 'DOMContentLoaded'
+    DOMContentLoaded: 'DOMContentLoaded'
 };
 
 export { Html, instance as html, events }

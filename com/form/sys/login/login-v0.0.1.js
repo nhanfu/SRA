@@ -1,10 +1,9 @@
-import { Form } from '../../../ngin/form.js';
-import { meta } from './login.meta-v0.0.1.js';
+import Base from '../../../ngin/base.js';
+import meta from './login.meta-v0.0.1.js';
 
-class Login extends Form {
+export default class Login extends Base {
     constructor() {
         super(meta);
-        this.render();
     }
 }
 
