@@ -3,9 +3,13 @@ import url from 'url';
 import LoadBalancer from './LoadBalancer.js';
 import svRunner from '../services/svRunner.js';
 import Sqlite from '../sql/sqlite.js';
+import path, { resolve } from 'path';
+import fs from 'fs';
+import log4js from 'log4js';
 
 var instance = null;
-
+const folder = process.argv[3] || 'com';
+const _logger = log4js.getLogger();
 export default class HttpServer {
     constructor() {
         this.http = http;
@@ -28,30 +32,12 @@ export default class HttpServer {
     }
 
     start() {
-        const requestListener = (r, s) => {
-            const uri = this.url.parse(r.url);
-            let body = [];
-
-            r.on('data', (chunk) => {
-                body.push(chunk);
-            });
-
-            r.on('end', async () => {
-                try {
-                    const arg = this.tryParseBody(body);
-                    const path = arg && arg.path || uri.pathname;
-                    if (path && path != '/') {
-                        const result = await this.invokeService(path, arg, s);
-                        this.writeStream(s, 200, typeof(result) === 'string' ? result : JSON.stringify(result));
-                    }
-                    else {
-                        s.writeHead(200);
-                        s.end('Ok');
-                    }
-                } catch (e) {
-                    this.writeStream(s, e.status || 500, JSON.stringify({ message: e.message }));
-                }
-            });
+        const requestListener = async (req, res) => {
+            const exist = await this.resolveFile(req, res);
+            if (exist) {
+                return;
+            }
+            this.resolveService(req, res);
         };
 
         this.server = this.http.createServer(requestListener);
@@ -59,6 +45,76 @@ export default class HttpServer {
             const conf = JSON.parse(row.Value);
             this.server.listen(conf.port, conf.host, () => {
                 console.log(`Server is running on http://${conf.host}:${conf.port}`);
+            });
+        });
+    }
+
+    resolveService(req, res) {
+        const uri = this.url.parse(req.url);
+        let body = [];
+
+        req.on('data', (chunk) => {
+            body.push(chunk);
+        });
+
+        req.on('end', async () => {
+            try {
+                const arg = this.tryParseBody(body);
+                const path = arg && arg.path || uri.pathname;
+                if (path && path != '/') {
+                    const result = await this.invokeService(path, arg, res);
+                    this.writeStream(res, 200, typeof (result) === 'string' ? result : JSON.stringify(result));
+                }
+                else {
+                    res.writeHead(200);
+                    res.end('Ok');
+                }
+            } catch (e) {
+                this.writeStream(res, e.status || 500, JSON.stringify({ message: e.message }));
+            }
+        });
+    }
+
+    resolveFile(req, res) {
+        const parsedUrl = url.parse(req.url);
+        if (parsedUrl.pathname === '' || parsedUrl.pathname === '/') return false;
+        let pathname = path.join(folder, parsedUrl.pathname);
+        const ext = path.parse(pathname).ext;
+        const map = {
+            '.ico': 'image/x-icon',
+            '.html': 'text/html',
+            '.js': 'text/javascript',
+            '.json': 'application/json',
+            '.css': 'text/css',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.wav': 'audio/wav',
+            '.mp3': 'audio/mpeg',
+            '.svg': 'image/svg+xml',
+            '.pdf': 'application/pdf',
+            '.doc': 'application/msword'
+        };
+        return new Promise((resolve, reject) => {
+            _logger.info(pathname);
+            fs.exists(pathname, function (exist) {
+                if (!exist) {
+                    res.statusCode = 404;
+                    res.end(`File ${pathname} not found!`);
+                    resolve(false);
+                }
+
+                if (fs.statSync(pathname).isDirectory()) pathname += '/index' + ext;
+
+                fs.readFile(pathname, function (err, data) {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.end(`Error getting the file: ${err}.`);
+                    } else {
+                        res.setHeader('Content-type', map[ext] || 'text/plain');
+                        res.end(data);
+                        resolve(true);
+                    }
+                });
             });
         });
     }

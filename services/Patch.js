@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (entity, args) => {
+export default function patch(entity, args) {
 	const patch = JSON.parse(entity);
 	var table = patch.Entity;
 	var changes = patch.Changes;

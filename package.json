@@ -3,16 +3,16 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "./startup.js",
+  "main": "./index.js",
   "scripts": {
-    "dev": "node startup.js --inspect & node com/start.js",
+    "dev": "node index.js --inspect & node ./com/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "David Neal (https://reverentgeek.com)",
   "license": "MIT",
   "bin": {
-    "hello": "./startup.js"
+    "hello": "./index.js"
   },
   "dependencies": {
     "better-sqlite3": "^8.0.1",

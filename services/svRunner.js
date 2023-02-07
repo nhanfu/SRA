@@ -55,7 +55,7 @@ export default class SvRunner {
 
     getRequireMod(service) {
         if (service.Require == null) return null;
-        return service.Require.split(',').map(mod => require(mod));
+        return service.Require.split(',').map(async mod => await import(mod));
     }
 
     executeCode(meta, service) {
