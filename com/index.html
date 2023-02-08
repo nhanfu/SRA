@@ -1,8 +1,8 @@
 <html class="h-full bg-gray-50">
 
 <head>
-    <link href="./main-rt.css" rel="stylesheet">
-    <script type="module" src="../form/sys/login/login-v0.0.1.js"></script>
+    <link href="./static/main-rt.css" rel="stylesheet">
+    <script type="module" src="./form/sys/login/login-v0.0.1.js"></script>
 </head>
 
 <body class="h-full">
@@ -123,7 +123,7 @@
         </div>
     </nav>
 
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div id="container" class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -166,7 +166,7 @@
                 </div>
 
                 <div>
-                    <button type="submit"
+                    <button type="submit" id="submit"
                         class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <!-- Heroicon name: mini/lock-closed -->

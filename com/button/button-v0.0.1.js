@@ -3,13 +3,12 @@ import Base from '../ngin/base.js';
 
 export default class Factory extends Base {
     constructor(meta, env) {
-        this.meta = meta;
-        this.env = env;
+        super(meta, env);
     }
 
     render() {
         const meta = this.meta;
-        if (meta.formId != null) {
+        if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
             html.take(this.env.container).button.text(this.meta.label);

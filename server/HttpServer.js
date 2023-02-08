@@ -103,8 +103,6 @@ export default class HttpServer {
                     resolve(false);
                 }
 
-                if (fs.statSync(pathname).isDirectory()) pathname += '/index' + ext;
-
                 fs.readFile(pathname, function (err, data) {
                     if (err) {
                         res.statusCode = 500;

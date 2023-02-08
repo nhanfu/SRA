@@ -1,20 +1,27 @@
 const meta = [
     {
-        com: '../input/input-v0.0.1.js',
-        formId: 'username',
-        field: 'username',
-        parentId: 'form',
+        com: '../div/div-v0.0.1.js',
+        selector: '#container',
+        field: 'form',
         events: {
-            change: (arg) => {
-                console.log(`Should login to the user ${arg.com.ele.value}`);
-            },
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         }
     },
     {
         com: '../input/input-v0.0.1.js',
+        selector: '#username',
+        field: 'username',
         parentId: 'form',
-        formId: 'password',
+        events: {
+            change: (arg) => {
+                console.log(`Should login to the user ${arg.com.ele.value}`);
+            }
+        }
+    },
+    {
+        com: '../input/input-v0.0.1.js',
+        parentId: 'form',
+        selector: '#password',
         field: 'password',
         events: {
             change: (arg) => {
@@ -25,7 +32,7 @@ const meta = [
     {
         com: '../button/button-v0.0.1.js',
         parentId: 'form',
-        formId: 'submit',
+        selector: '#submit',
         events: {
             click: (arg) => {
                 console.log(`This is another message`);

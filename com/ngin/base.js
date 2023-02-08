@@ -28,15 +28,24 @@ export default class Base {
 
     async render() {
         this.setEleFromTemplate();
-        const comTask = this.meta.map(async x => x.task = await import(x.com));
-        await Promise.all(comTask);
-        this.meta.map(async meta => {
-            if (meta.task.Factory == null) {
-                return;
-            }
-            const instance = meta.task.Factory.create(meta, this.env);
-            delete meta.task;
-            await instance.render();
+        const factoryMap = {};
+        const tasks = this.meta.map(async meta => await this.importCom(meta, factoryMap));
+        await Promise.all(tasks);
+        this.meta.forEach(x => x.resolvedClass.create(x, this.env));
+    }
+
+    importCom(meta, factoryMap) {
+        return new Promise((resolve, reject) => {
+            import(meta.com).then(factory => {
+                if (factory == null) return;
+                if (factory.default == null && factory.Factory == null) {
+                    meta.resolvedClass = factoryMap[meta.com];
+                } else {
+                    meta.resolvedClass = factory.Factory || factory.default;
+                    factoryMap[meta.com] = meta.resolvedClass;
+                }
+                resolve(meta.resolvedClass);
+            });
         });
     }
 
@@ -45,8 +54,8 @@ export default class Base {
     }
 
     setEleFromTemplate() {
-        if (this.meta.formId) {
-            this.ele = this.env.container.querySelector(`#${this.meta.formId}`);
+        if (this.meta.selector) {
+            this.ele = this.env.container.querySelector(this.meta.selector);
             this.events.DOMContentLoaded.forEach(action => action.call(this, this));
         }
     }

@@ -1,14 +1,14 @@
 import Base from '../ngin/base.js';
 import { html, events } from '../ngin/html.js';
 
-export class Factory extends Base {
+export default class Factory extends Base {
     constructor(meta, env) {
         super(meta, env);
     }
 
     render() {
         const meta = this.meta;
-        if (meta.formId != null) {
+        if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
             html.take(this.env.container).input.value(this.meta.val);
