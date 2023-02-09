@@ -8,7 +8,7 @@ import fs from 'fs';
 import log4js from 'log4js';
 
 var instance = null;
-const folder = process.argv[3] || 'com';
+const folder = process.argv[3] || 'public';
 const _logger = log4js.getLogger();
 export default class HttpServer {
     constructor() {

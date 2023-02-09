@@ -1,7 +1,8 @@
-import Base from '../ngin/base.js';
-import { html, events } from '../ngin/html.js';
+import Base from '../../ngin/base.js';
+import { html } from '../../ngin/html.js';
+import { eventName } from '../event.js';
 
-export default class Factory extends Base {
+export default class Input extends Base {
     constructor(meta, env) {
         super(meta, env);
     }
@@ -17,8 +18,8 @@ export default class Factory extends Base {
     }
 
     postRenderEvent(meta) {
-        html.take(this.ele).event(events.change, (e) => meta.events.change({ com: this, event: e }));
+        this.tryBindMetaEvent(eventName.change, meta);
     }
 
-    static create(meta, env) { return new Factory(meta, env); }
+    static create(meta, env) { return new Input(meta, env); }
 }

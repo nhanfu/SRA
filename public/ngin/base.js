@@ -1,3 +1,5 @@
+import { DOMEvent, eventName } from "../core/event.js";
+
 export default class Base {
     constructor(meta, env) {
         this.meta = meta;
@@ -9,20 +11,17 @@ export default class Base {
     }
 
     preRenderEvents(meta) {
-        this.events = {};
+        this.events = new DOMEvent();
         this.events.userInput = [];
         this.events.userInput.push(x => {
             this.dirty = true;
         });
         this.validationRules = [];
-        this.events.DOMContentLoaded = [];
         this.events.DOMContentLoaded.push(async (x) => {
             if (this.validationRules.length > 0) {
                 this.validate();
             }
-            if (meta != null && meta.events.DOMContentLoaded != null) {
-                await meta.events.DOMContentLoaded.call(this, this);
-            }
+            this.events.invoke(eventName.DOMContentLoaded, meta, this);
         });
     }
 
@@ -45,12 +44,17 @@ export default class Base {
                     factoryMap[meta.com] = meta.resolvedClass;
                 }
                 resolve(meta.resolvedClass);
-            });
+            }).catch(error => reject(error));
         });
     }
 
     postRenderEvent(meta) {
 
+    }
+
+    tryBindMetaEvent(name, meta) {
+        if (!name || !meta || !meta.event || meta.event[name]) return;
+        html.take(this.ele).event(name, (e) => meta.events[name]({ com: this, event: e }));
     }
 
     setEleFromTemplate() {

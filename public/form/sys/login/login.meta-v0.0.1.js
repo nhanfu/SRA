@@ -1,6 +1,6 @@
 const meta = [
     {
-        com: '../div/div-v0.0.1.js',
+        com: '../core/div/div-v0.0.1.js',
         selector: '#container',
         field: 'form',
         events: {
@@ -8,7 +8,7 @@ const meta = [
         }
     },
     {
-        com: '../input/input-v0.0.1.js',
+        com: '../core/input/input-v0.0.1.js',
         selector: '#username',
         field: 'username',
         parentId: 'form',
@@ -19,7 +19,7 @@ const meta = [
         }
     },
     {
-        com: '../input/input-v0.0.1.js',
+        com: '../core/input/input-v0.0.1.js',
         parentId: 'form',
         selector: '#password',
         field: 'password',
@@ -30,7 +30,7 @@ const meta = [
         }
     },
     {
-        com: '../button/button-v0.0.1.js',
+        com: '../core/button/button-v0.0.1.js',
         parentId: 'form',
         selector: '#submit',
         events: {
