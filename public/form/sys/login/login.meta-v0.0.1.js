@@ -5,7 +5,7 @@ const meta = [
         field: 'form',
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
-        }
+        },
     },
     {
         com: '../core/input/input-v0.0.1.js',
@@ -35,7 +35,9 @@ const meta = [
         selector: '#submit',
         events: {
             click: (arg) => {
-                console.log(`This is another message`);
+                const { com, event } = arg;
+                event.preventDefault();
+                console.log(`This is the message of submit button`);
             }
         }
     },

@@ -1,4 +1,5 @@
 import { DOMEvent, eventName } from "../core/event.js";
+import { html } from '../ngin/html.js';
 
 export default class Base {
     constructor(meta, env) {
@@ -53,7 +54,7 @@ export default class Base {
     }
 
     tryBindMetaEvent(name, meta) {
-        if (!name || !meta || !meta.event || meta.event[name]) return;
+        if (!name || !meta || !meta.events || !meta.events[name]) return;
         html.take(this.ele).event(name, (e) => meta.events[name]({ com: this, event: e }));
     }
 
