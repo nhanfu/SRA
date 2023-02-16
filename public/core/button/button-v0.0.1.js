@@ -12,7 +12,7 @@ export default class Button extends Base {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
-            html.take(this.env.container).button.text(this.meta.label).style({color: 'white'});
+            html.take(this.env).button.text(this.meta.label).style({color: 'white'});
             this.ele = html.ctx;
         }
     }

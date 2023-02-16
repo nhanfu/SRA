@@ -1,14 +1,16 @@
 import { DOMEvent, eventName } from "../core/event.js";
 import Utils from "../core/utils.js";
-import { html } from '../ngin/html.js';
 
 export default class Base {
     constructor(meta, env) {
         this.meta = Array.isArray(meta) ? meta[0] : meta;
         this.meta.instance = this;
         this.parent = this.meta._parent != null ? this.meta._parent.instance : null;
+        if (this.parent != null) {
+            this.parent.children.push(this);
+        }
         this.entity = this.meta.entity || this.parent.entity;
-        this.env = env || { container: document.body };
+        this.env = env || document.body;
         this.children = [];
         this.initEventSource();
         this.render(meta, env);
@@ -28,7 +30,7 @@ export default class Base {
 
         const tasks = componentMeta.map(async meta => await this.importCom(meta, factoryMap));
         await Promise.all(tasks);
-        componentMeta.forEach(x => x.resolvedClass.create(x, this.env));
+        componentMeta.forEach(x => x.resolvedClass.create(x, !Utils.isNoU(x._parent) ? x._parent.instance.ele : this.env));
     }
 
     importCom(meta, factoryMap) {
@@ -69,9 +71,40 @@ export default class Base {
 
     setEleFromTemplate() {
         if (this.meta.selector) {
-            this.ele = this.env.container.querySelector(this.meta.selector);
+            this.ele = this.env.querySelector(this.meta.selector);
             this.events.DOMContentLoaded.forEach(action => action.call(this, this));
         }
+    }
+
+    updateView() {
+        const children = Utils.flattern(this.children, x => x.children);
+        if (children == null || !children.length) return;
+        children.forEach(x => x.updateView());
+    }
+
+    removeDom() {
+        this.ele.remove();
+    }
+
+    dispose() {
+        const index = this.parent.children.indexOf(this);
+        this.parent.children.splice(index, 1);
+        removeDom();
+    }
+
+    disposeChildren() {
+        let leaves = this.getLeaves();
+        if (Utils.isNoE(leaves)) return;
+        while (!Utils.isNoE(leaves)) {
+            leaves.forEach(leaf => {
+                leaf.dispose();
+            });
+            leaves = this.getLeaves();
+        }
+    }
+
+    getLeaves() {
+        return Utils.flattern(this.children, x => x.children).filter(x => Utils.isNoE(x.children));
     }
 
     static create(meta, env) { return new Base(meta, env); }

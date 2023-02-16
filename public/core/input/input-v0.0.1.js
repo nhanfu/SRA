@@ -12,7 +12,7 @@ export default class Input extends Base {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
-            html.take(this.env.container).input.value(this.meta.val);
+            html.take(this.env).input.value(this.meta.val);
             this.ele = html.ctx;
         }
         this.ele.type = meta.type || 'input';
@@ -23,6 +23,10 @@ export default class Input extends Base {
         super.bindEvents(meta);
         this.tryBindEvent(eventName.change, () => this.entity[meta.field] = this.ele.value);
         this.tryBindEvent(eventName.change, meta);
+    }
+
+    updateView() {
+        this.ele.value = this.entity[this.meta.field];
     }
 
     static create(meta, env) { return new Input(meta, env); }

@@ -12,7 +12,7 @@ export default class Div extends Base {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
-            html.take(this.env.container).div.label.text(this.meta.label);
+            html.take(this.env).div.label.text(this.meta.label);
             this.ele = html.ctx;
         }
     }

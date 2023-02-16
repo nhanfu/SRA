@@ -3,6 +3,10 @@ export default class Utils {
         return obj === null || obj === undefined;
     }
 
+    static isNoE(obj) {
+        return this.isNoU(obj) || !obj.length;
+    }
+
     static isFunc(x) {
         return typeof(x) === 'function';
     }

@@ -36,7 +36,10 @@ const meta = [
                     click: (arg) => {
                         const { com, event } = arg;
                         event.preventDefault();
-                        console.log(`This is the message of submit button`);
+                        const data = JSON.stringify(com.entity);
+                        console.log(`This is the message of submit button, the data should be ${data}`);
+                        com.entity.password = '';
+                        com.parent.updateView();
                     }
                 }
             },
