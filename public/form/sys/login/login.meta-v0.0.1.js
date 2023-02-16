@@ -3,11 +3,20 @@ const meta = [
         com: '../core/div/div-v0.0.1.js',
         selector: '#container',
         field: 'form',
-        entity: { username: 'nhannguyen', password: '123456' },
+        entity: { username: 'nhannguyen', password: '123456', test: 0.1 },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
         children: [
+            {
+                com: '../core/number/number-v0.0.1.js',
+                field: 'test',
+                events: {
+                    change: (arg) => {
+                        console.log(`Should login to the user ${arg.com.ele.value}`);
+                    }
+                }
+            },
             {
                 com: '../core/input/input-v0.0.1.js',
                 selector: '#username',
