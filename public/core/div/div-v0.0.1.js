@@ -17,8 +17,9 @@ export default class Div extends Base {
         }
     }
 
-    postRenderEvent(meta) {
-        this.tryBindMetaEvent(eventName.click, meta);
+    bindEvents(meta) {
+        super.bindEvents(meta);
+        this.tryBindEvent(eventName.click, meta);
     }
 
     static create(meta, env) { return new Div(meta, env); }

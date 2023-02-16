@@ -1,37 +1,34 @@
 import { DOMEvent, eventName } from "../core/event.js";
+import Utils from "../core/utils.js";
 import { html } from '../ngin/html.js';
 
 export default class Base {
     constructor(meta, env) {
-        this.meta = meta;
+        this.meta = Array.isArray(meta) ? meta[0] : meta;
+        this.meta.instance = this;
+        this.parent = this.meta._parent != null ? this.meta._parent.instance : null;
+        this.entity = this.meta.entity || this.parent.entity;
         this.env = env || { container: document.body };
         this.children = [];
-        this.preRenderEvents(meta);
+        this.initEventSource();
         this.render(meta, env);
-        this.postRenderEvent(meta);
+        this.bindEvents(meta);
     }
 
-    preRenderEvents(meta) {
+    initEventSource() {
         this.events = new DOMEvent();
         this.events.userInput = [];
-        this.events.userInput.push(x => {
-            this.dirty = true;
-        });
         this.validationRules = [];
-        this.events.DOMContentLoaded.push(async (x) => {
-            if (this.validationRules.length > 0) {
-                this.validate();
-            }
-            this.events.invoke(eventName.DOMContentLoaded, meta, this);
-        });
     }
 
-    async render() {
+    async render(meta) {
         this.setEleFromTemplate();
         const factoryMap = {};
-        const tasks = this.meta.map(async meta => await this.importCom(meta, factoryMap));
+        const componentMeta = Utils.flattern(meta, x => x.children);
+
+        const tasks = componentMeta.map(async meta => await this.importCom(meta, factoryMap));
         await Promise.all(tasks);
-        this.meta.forEach(x => x.resolvedClass.create(x, this.env));
+        componentMeta.forEach(x => x.resolvedClass.create(x, this.env));
     }
 
     importCom(meta, factoryMap) {
@@ -49,13 +46,25 @@ export default class Base {
         });
     }
 
-    postRenderEvent(meta) {
-
+    bindEvents(meta) {
+        this.events.userInput.push(x => {
+            this.dirty = true;
+        });
+        this.events.DOMContentLoaded.push(async (x) => {
+            if (this.validationRules.length > 0) {
+                this.validate();
+            }
+            this.events.invoke(eventName.DOMContentLoaded, meta, this);
+        });
     }
 
-    tryBindMetaEvent(name, meta) {
-        if (!name || !meta || !meta.events || !meta.events[name]) return;
-        html.take(this.ele).event(name, (e) => meta.events[name]({ com: this, event: e }));
+    tryBindEvent(name, metaOrAction) {
+        if (!name || !metaOrAction) return;
+        if (Utils.isFunc(metaOrAction)) {
+            this.ele.addEventListener(name, metaOrAction);
+        } else if (metaOrAction.events && metaOrAction.events[name]) {
+            this.ele.addEventListener(name, (e) => metaOrAction.events[name]({ com: this, event: e }));
+        }
     }
 
     setEleFromTemplate() {

@@ -15,10 +15,14 @@ export default class Input extends Base {
             html.take(this.env.container).input.value(this.meta.val);
             this.ele = html.ctx;
         }
+        this.ele.type = meta.type || 'input';
+        this.ele.value = this.entity[meta.field];
     }
 
-    postRenderEvent(meta) {
-        this.tryBindMetaEvent(eventName.change, meta);
+    bindEvents(meta) {
+        super.bindEvents(meta);
+        this.tryBindEvent(eventName.change, () => this.entity[meta.field] = this.ele.value);
+        this.tryBindEvent(eventName.change, meta);
     }
 
     static create(meta, env) { return new Input(meta, env); }
