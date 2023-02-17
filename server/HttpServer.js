@@ -6,6 +6,7 @@ import Sqlite from '../sql/sqlite.js';
 import path, { resolve } from 'path';
 import fs from 'fs';
 import log4js from 'log4js';
+import conf from './config.js';
 
 var instance = null;
 const folder = process.argv[3] || 'public';
@@ -41,11 +42,8 @@ export default class HttpServer {
         };
 
         this.server = this.http.createServer(requestListener);
-        this.db.getAsync(`select * from [Const] where [Key] = 'host'`).then(row => {
-            const conf = JSON.parse(row.Value);
-            this.server.listen(conf.port, conf.host, () => {
-                console.log(`Server is running on http://${conf.host}:${conf.port}`);
-            });
+        this.server.listen(conf.port, conf.host, () => {
+            console.log(`Server is running on http://${conf.host}:${conf.port}`);
         });
     }
 

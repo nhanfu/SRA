@@ -7,8 +7,11 @@ export default class Input extends Base {
         super(meta, env);
     }
 
-    render() {
-        const meta = this.meta;
+    render(meta) {
+        this.renderInput(meta);
+    }
+
+    renderInput(meta) {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
@@ -21,8 +24,9 @@ export default class Input extends Base {
 
     bindEvents(meta) {
         super.bindEvents(meta);
-        this.tryBindEvent(eventName.change, () => this.entity[meta.field] = this.ele.value);
-        this.tryBindEvent(eventName.change, meta);
+        this.tryBindEvent(eventName.input, this.entity[meta.field] = this.ele.value);
+        const events = [eventName.change, eventName.input, eventName.focus, eventName.blur];
+        events.forEach(e => this.tryBindEvent(e, meta));
     }
 
     updateView() {

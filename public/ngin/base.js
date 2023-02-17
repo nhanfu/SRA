@@ -2,6 +2,10 @@ import { DOMEvent, eventName } from "../core/event.js";
 import Utils from "../core/utils.js";
 
 export default class Base {
+    _dirty = false;
+    _noDirty = false;
+    _alwaysValid = false;
+
     constructor(meta, env) {
         this.meta = Array.isArray(meta) ? meta[0] : meta;
         this.meta.instance = this;
@@ -103,8 +107,12 @@ export default class Base {
         }
     }
 
-    getLeaves() {
-        return Utils.flattern(this.children, x => x.children).filter(x => Utils.isNoE(x.children));
+    getLeaves(predicate) {
+        return Utils.flattern(this.children, x => x.children).filter(x => predicate == null || predicate(x) && Utils.isNoE(x.children));
+    }
+
+    get dirty() {
+        return this._dirty || this.getLeaves(x => !x._noDirty).some(x => x._dirty);
     }
 
     static create(meta, env) { return new Base(meta, env); }

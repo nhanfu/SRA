@@ -11,6 +11,7 @@ const meta = [
             {
                 com: '../core/number/number-v0.0.1.js',
                 field: 'test',
+                precision: 2,
                 events: {
                     change: (arg) => {
                         console.log(`Should login to the user ${arg.com.ele.value}`);
