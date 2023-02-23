@@ -1,5 +1,5 @@
-import { html } from '../../ngin/html.js';
-import Base from '../../ngin/base.js';
+import { html } from '../html.js';
+import Base from '../base.js';
 import { eventName } from '../event.js';
 
 export default class Div extends Base {

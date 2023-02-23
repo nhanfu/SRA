@@ -1,5 +1,5 @@
-import { DOMEvent, eventName } from "../core/event.js";
-import Utils from "../core/utils.js";
+import { DOMEvent, eventName } from "./event.js";
+import Utils from "./utils.js";
 
 export default class Base {
     _dirty = false;
