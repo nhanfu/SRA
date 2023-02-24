@@ -69,9 +69,19 @@ class Html {
         return this;
     }
 
+    html(key, value) {
+        this.#setProp('innerHTML', key, value);
+        return this;
+    }
+
     value(key, value) {
         this.#setProp('value', key, value);
         return this;
+    }
+
+    get end() { 
+        this.ctx = this.ctx.parentElement;
+        return this 
     }
 
     #setProp(prop, key, value) {
@@ -85,6 +95,6 @@ class Html {
     }
 }
 
-const instance = new Html();
+const html = new Html();
 
-export { Html, instance as html }
+export { Html, html }
