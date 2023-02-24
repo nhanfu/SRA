@@ -15,13 +15,10 @@ export default class HttpServer {
     constructor() {
         this.http = http;
         this.url = url;
-        this.LoadBalanceServer = LoadBalancer;
         this.SvRunner = svRunner;;
         this.db = Sqlite.connect();
         this.svRunner = new this.SvRunner();
-        this.loadBalanceServer = new this.LoadBalanceServer();
         this.svRunner.run();
-        this.loadBalanceServer.run();
     }
 
     static autoStart() {
