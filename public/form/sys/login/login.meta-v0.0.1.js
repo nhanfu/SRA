@@ -3,7 +3,7 @@ const meta = [
         com: '../core/div/div-v0.0.1.js',
         selector: '#container',
         field: 'form',
-        entity: { username: 'nhannguyen', password: '123456', test: 0.1 },
+        entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1 },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
@@ -12,6 +12,9 @@ const meta = [
                 com: '../core/number/number-v0.0.1.js',
                 field: 'test',
                 precision: 2,
+                defaultVal: (arg) => {
+                    return arg.entity.test || 8;
+                },
                 events: {
                     change: (arg) => {
                         console.log(`Should login to the user ${arg.com.ele.value}`);
@@ -20,8 +23,8 @@ const meta = [
             },
             {
                 com: '../core/input/input-v0.0.1.js',
-                selector: '#username',
-                field: 'username',
+                selector: '#email',
+                field: 'email',
                 events: {
                     change: (arg) => {
                         console.log(`Should login to the user ${arg.com.ele.value}`);

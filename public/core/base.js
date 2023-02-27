@@ -16,6 +16,7 @@ export default class Base {
         this.entity = this.meta.entity || this.parent.entity;
         this.env = env || document.body;
         this.children = [];
+        this.setDefault();
         this.initEventSource();
         this.render(meta, env);
         this.bindEvents(meta);
@@ -113,6 +114,13 @@ export default class Base {
 
     get dirty() {
         return this._dirty || this.getLeaves(x => !x._noDirty).some(x => x._dirty);
+    }
+
+    setDefault() {
+        if (this.entity == null) return;
+        const id = this.entity.Id || this.entity.id;
+        if (id != null || this.meta.defaultVal == null) return;
+        this.entity[this.meta.field] = this.meta.defaultVal(this);
     }
 
     static create(meta, env) { return new Base(meta, env); }
