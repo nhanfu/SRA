@@ -1,10 +1,9 @@
 import http from 'http';
 import url from 'url';
-import LoadBalancer from './LoadBalancer.js';
 import svRunner from '../services/svRunner.js';
 import Sqlite from '../sql/sqlite.js';
-import path, { resolve } from 'path';
-import fs from 'fs';
+import path from 'path';
+import { readFile } from 'fs';
 import log4js from 'log4js';
 import conf from './config.js';
 
@@ -91,23 +90,18 @@ export default class HttpServer {
         };
         return new Promise((resolve, reject) => {
             _logger.info(pathname);
-            fs.exists(pathname, function (exist) {
-                if (!exist) {
-                    res.statusCode = 404;
-                    res.end(`File ${pathname} not found!`);
-                    resolve(false);
-                }
-
-                fs.readFile(pathname, function (err, data) {
-                    if (err) {
+            readFile(pathname, function (err, data) {
+                if (err) {
+                    if (ext != null) {
                         res.statusCode = 500;
-                        res.end(`Error getting the file: ${err}.`);
-                    } else {
-                        res.setHeader('Content-type', map[ext] || 'text/plain');
-                        res.end(data);
-                        resolve(true);
+                        res.end(`Error getting the file: ${pathname}.`);
                     }
-                });
+                    resolve(false);
+                } else {
+                    res.setHeader('Content-type', map[ext] || 'text/plain');
+                    res.end(data);
+                    resolve(true);
+                }
             });
         });
     }
