@@ -4,7 +4,7 @@ import Input from '../input/input-v0.0.1.js';
 import Utils from '../utils.js';
 
 export default class Number extends Input {
-    setSelection = false;
+    setSelection = true;
     constructor(meta, env) {
         super(meta, env);
     }
@@ -35,7 +35,7 @@ export default class Number extends Input {
         const dotCount = Array.from(ele.value).filter(x => x == ',').length;
         const selectionEnd = this.ele.selectionEnd;
         ele.value = System.String.format(`{0:n${precision}}`, finalVal);
-        const addedDot = Array.from(ele.value).filter(x => x === ',') - dotCount;
+        const addedDot = Array.from(this.ele.value).filter(x => x === ',').length - dotCount;
         if (this.setSelection) {
             this.ele.selectionStart = selectionEnd + addedDot;
             this.ele.selectionEnd = selectionEnd + addedDot;
