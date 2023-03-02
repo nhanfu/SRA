@@ -29,4 +29,9 @@ export default class Utils {
         if (children == null || !children.length) return arr;
         return arr.concat(Utils.flattern(children));
     }
+
+    static async fetchText(url) {
+        const response = await fetch(url);
+        return response.text();
+    }
 }

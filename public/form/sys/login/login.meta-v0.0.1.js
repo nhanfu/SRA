@@ -1,13 +1,23 @@
 const meta = [
     {
+        id: 'root',
         com: '../core/div/div-v0.0.1.js',
-        selector: '#container',
+        selector: 'main section',
         field: 'form',
         entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1 },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
         children: [
+            {
+                com: '../core/div/div-v0.0.1.js',
+                field: 'form',
+                templateUrl: './simple.html',
+                entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1 },
+                events: {
+                    DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
+                },
+            },
             {
                 com: '../core/number/number-v0.0.1.js',
                 field: 'test',
