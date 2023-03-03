@@ -4,7 +4,7 @@ const meta = [
         com: '../core/div/div-v0.0.1.js',
         selector: 'main section',
         field: 'form',
-        entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1 },
+        entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1, code: 'ahihi' },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
@@ -13,10 +13,13 @@ const meta = [
                 com: '../core/div/div-v0.0.1.js',
                 field: 'form',
                 templateUrl: './simple.html',
-                entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1 },
-                events: {
-                    DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
-                },
+                children: [
+                    {
+                        com: '../core/input/input-v0.0.1.js',
+                        selector: '#code',
+                        field: 'code'
+                    },
+                ]
             },
             {
                 com: '../core/number/number-v0.0.1.js',

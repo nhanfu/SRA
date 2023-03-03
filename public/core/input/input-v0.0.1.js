@@ -19,7 +19,7 @@ export default class Input extends Base {
             this.ele = html.ctx;
         }
         this.ele.type = meta.type || 'input';
-        this.ele.value = this.entity[meta.field];
+        this.ele.value = this.entity[meta.field] || null;
     }
 
     bindEvents(meta) {

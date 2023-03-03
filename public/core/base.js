@@ -18,8 +18,8 @@ export default class Base {
         this.children = [];
         this.setDefault();
         this.initEventSource();
-        this.render(meta, env);
-        this.bindEvents(meta);
+        this.render(this.meta, env);
+        this.bindEvents(this.meta);
     }
 
     initEventSource() {
@@ -31,8 +31,10 @@ export default class Base {
     async render(meta) {
         this.setEleFromTemplate();
         const factoryMap = {};
-        const componentMeta = Utils.flattern(meta, x => x.children);
-
+        const componentMeta = Utils.flattern(meta.children, x => x.children);
+        meta.children.forEach(x => x._parent = meta);
+        componentMeta.splice(0, 0, meta);
+        await this.loadTemplate(componentMeta);
         const tasks = componentMeta.map(async meta => await this.importCom(meta, factoryMap));
         await Promise.all(tasks);
         componentMeta.forEach(x => x.resolvedClass.create(x, !Utils.isNoU(x._parent) ? x._parent.instance.ele : this.env));
@@ -121,6 +123,14 @@ export default class Base {
         const id = this.entity.Id || this.entity.id;
         if (id != null || this.meta.defaultVal == null) return;
         this.entity[this.meta.field] = this.meta.defaultVal(this);
+    }
+
+    async loadTemplate(meta) {
+        if (meta == null || !meta.length) return;
+        const templates = meta.filter(x => x.templateUrl != null).map(async x => {
+            x.template = await Utils.fetchText(x.templateUrl);
+        });
+        await Promise.all(templates);
     }
 
     static create(meta, env) { return new Base(meta, env); }
