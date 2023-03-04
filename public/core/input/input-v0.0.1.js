@@ -15,7 +15,7 @@ export default class Input extends Base {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         } else {
-            html.take(this.env).input.value(this.meta.val);
+            html.take(this.env).input;
             this.ele = html.ctx;
         }
         this.ele.type = meta.type || 'input';
@@ -24,7 +24,14 @@ export default class Input extends Base {
 
     bindEvents(meta) {
         super.bindEvents(meta);
-        this.tryBindEvent(eventName.input, this.entity[meta.field] = this.ele.value);
+        this.tryBindEvent(eventName.input, () => {
+            if (this.ele.type == 'checkbox') {
+                this.entity[meta.field] = this.ele.checked;
+            }
+            else {
+                this.entity[meta.field] = this.ele.value;
+            }
+        });
         const events = [eventName.change, eventName.input, eventName.focus, eventName.blur];
         events.forEach(e => this.tryBindEvent(e, meta));
     }

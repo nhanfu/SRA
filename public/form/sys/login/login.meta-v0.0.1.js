@@ -4,7 +4,7 @@ const meta = [
         com: '../core/div/div-v0.0.1.js',
         selector: 'main section',
         field: 'form',
-        entity: { email: 'nhannguyen@abc.com', password: '123456', test: 0.1, code: 'ahihi' },
+        entity: { email: 'nhannguyen@abc.com', password: '123456', code: 'ahihi' },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
@@ -52,6 +52,18 @@ const meta = [
                 events: {
                     change: (arg) => {
                         console.log(`Should login with the password ${arg.com.ele.value}`);
+                    }
+                }
+            },
+            {
+                com: '../core/input/input-v0.0.1.js',
+                selector: '#rememberMe',
+                field: 'rememberme',
+                type: 'checkbox',
+                events: {
+                    input: (arg) => {
+                        const { event, com } = arg;
+                        console.log(`Should remember me: ${com.entity.rememberme}`);
                     }
                 }
             },
