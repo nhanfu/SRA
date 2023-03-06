@@ -10,6 +10,7 @@ export default class Div extends Base {
     async render(meta) {
         if (meta.template != null) {
             this.renderFromTemplate(meta);
+            meta.template = null;
             return;
         }
         if (meta.selector != null) {
@@ -32,11 +33,11 @@ export default class Div extends Base {
         if (div.childElementCount == 0) return;
         const shouldWrap = div.childElementCount > 1;
         if (shouldWrap) {
-            this.env.appendChild(div);
+            this.parentEle.appendChild(div);
             this.ele = div;
         } else {
             this.ele = div.firstChild;
-            this.env.appendChild(div.firstChild);
+            this.parentEle.appendChild(div.firstChild);
         }
         if (meta.selector != null) {
             this.setEleFromTemplate();

@@ -12,6 +12,8 @@ const meta = [
             {
                 com: '../core/div/div-v0.0.1.js',
                 field: 'form',
+                parentSelector: 'footer',
+                clearParent: true,
                 templateUrl: './simple.html',
                 children: [
                     {

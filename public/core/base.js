@@ -18,6 +18,7 @@ export default class Base {
         this.children = [];
         this.setDefault();
         this.initEventSource();
+        this.setParentEle(this.meta);
         this.render(this.meta, env);
         this.bindEvents(this.meta);
     }
@@ -37,7 +38,10 @@ export default class Base {
         await this.loadTemplate(componentMeta);
         const tasks = componentMeta.map(async meta => await this.importCom(meta, factoryMap));
         await Promise.all(tasks);
-        componentMeta.forEach(x => x.resolvedClass.create(x, !Utils.isNoU(x._parent) ? x._parent.instance.ele : this.env));
+        componentMeta.forEach(x => {
+            x.resolvedClass.create(x, !Utils.isNoU(x._parent) ? x._parent.instance.ele : this.env);
+            delete x.resolvedClass;
+        });
     }
 
     importCom(meta, factoryMap) {
@@ -131,6 +135,15 @@ export default class Base {
             x.template = await Utils.fetchText(x.templateUrl);
         });
         await Promise.all(templates);
+    }
+
+    setParentEle(meta) {
+        if (meta.parentSelector == null) return;
+        const root = this.parent?.env ?? document.body;
+        this.parentEle = root.querySelector(meta.parentSelector);
+        if (this.parentEle != null && meta.clearParent) {
+            this.parentEle.innerHTML = null;
+        }
     }
 
     static create(meta, env) { return new Base(meta, env); }
