@@ -11,16 +11,16 @@ export default class Utils {
         return typeof(x) === 'function';
     }
 
-    static flattern(arr, expr) {
+    static flattern(arr, expr, setRelationship) {
         if (arr == null || !arr.length) return arr;
         if (!expr ) return arr;
+        if (!setRelationship) setRelationship = (parent, child) => child._parent = parent;
 
         const children = arr.map(item => {
                 const children = expr(item);
                 if (this.isNoU(children)) return children;
                 children.forEach(child => {
-                    if (!this.isNoU(child._parent)) return;
-                    child._parent = item;
+                    setRelationship(item, child);
                 });
                 return children;
             })

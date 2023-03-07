@@ -8,7 +8,7 @@ class Html {
         'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select',
         'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td',
         'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video'];
-    
+
     constructor() {
         this.#tags.forEach(x => this.defineTag(x));
         this.defindSelfClosingTag();
@@ -32,12 +32,12 @@ class Html {
     defindSelfClosingTag() {
         ['hr', 'br'].forEach((tag) => {
             Object.defineProperty(this, tag, {
-              get: function () {
-                ctx.appendChild(document.createElement(tag));
-                return this;
-              }
+                get: function () {
+                    ctx.appendChild(document.createElement(tag));
+                    return this;
+                }
             });
-          });
+        });
     }
 
     event(name, handler) {
@@ -79,9 +79,14 @@ class Html {
         return this;
     }
 
-    get end() { 
+    get end() {
         this.ctx = this.ctx.parentElement;
-        return this 
+        return this
+    }
+
+    className(name) {
+        this.ctx.classList.add(name);
+        return this;
     }
 
     #setProp(prop, key, value) {

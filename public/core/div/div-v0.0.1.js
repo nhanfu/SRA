@@ -7,10 +7,9 @@ export default class Div extends Base {
         super(meta, env);
     }
 
-    async render(meta) {
+    preRender(meta) {
         if (meta.template != null) {
             this.renderFromTemplate(meta);
-            meta.template = null;
             return;
         }
         if (meta.selector != null) {
@@ -18,6 +17,22 @@ export default class Div extends Base {
         } else {
             html.take(this.env).div.label.text(this.meta.label);
             this.ele = html.ctx;
+        }
+    }
+
+    render(meta) {
+        if (this.parentEle == null) return;
+        const div = this.innerDOM;
+        const shouldWrap = div.childElementCount > 1;
+        if (shouldWrap) {
+            this.parentEle.appendChild(div);
+            this.ele = div;
+        } else {
+            this.ele = div.firstChild;
+            this.parentEle.appendChild(div.firstChild);
+        }
+        if (meta.selector != null) {
+            this.setEleFromTemplate();
         }
     }
 
@@ -31,17 +46,7 @@ export default class Div extends Base {
         const div = document.createElement('div');
         div.innerHTML = meta.template;
         if (div.childElementCount == 0) return;
-        const shouldWrap = div.childElementCount > 1;
-        if (shouldWrap) {
-            this.parentEle.appendChild(div);
-            this.ele = div;
-        } else {
-            this.ele = div.firstChild;
-            this.parentEle.appendChild(div.firstChild);
-        }
-        if (meta.selector != null) {
-            this.setEleFromTemplate();
-        }
+        this.innerDOM = div;
     }
 
     static create(meta, env) { return new Div(meta, env); }

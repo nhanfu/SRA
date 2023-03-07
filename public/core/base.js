@@ -13,13 +13,13 @@ export default class Base {
         if (this.parent != null) {
             this.parent.children.push(this);
         }
-        this.entity = this.meta.entity || this.parent.entity;
+        this.entity = this.meta.entity || this.parent?.entity;
         this.env = env || document.body;
         this.children = [];
         this.setDefault();
         this.initEventSource();
         this.setParentEle(this.meta);
-        this.render(this.meta, env);
+        this.preRender(this.meta, env);
         this.bindEvents(this.meta);
     }
 
@@ -29,19 +29,33 @@ export default class Base {
         this.validationRules = [];
     }
 
-    async render(meta) {
+    async preRender(meta) {
         this.setEleFromTemplate();
+        await this.resolveChildren(meta);
+    }
+
+    async resolveChildren(meta, childrenMap, resolveCondition) {
+        if (meta == null) return;
+        if (!childrenMap) childrenMap = x => x.children;
         const factoryMap = {};
-        const componentMeta = Utils.flattern(meta.children, x => x.children);
+        const componentMeta = Utils.flattern(meta.children, childrenMap, (parent, child) => child._parent = parent);
         meta.children.forEach(x => x._parent = meta);
         componentMeta.splice(0, 0, meta);
-        await this.loadTemplate(componentMeta);
-        const tasks = componentMeta.map(async meta => await this.importCom(meta, factoryMap));
-        await Promise.all(tasks);
-        componentMeta.forEach(x => {
-            x.resolvedClass.create(x, !Utils.isNoU(x._parent) ? x._parent.instance.ele : this.env);
-            delete x.resolvedClass;
+        componentMeta.forEach(meta => {
+            if (meta._parent == null || !Utils.isNoU(meta.customResolve)) return;
+            meta.customResolve = meta._parent.customResolve;
         });
+        await this.loadTemplate(componentMeta);
+        const tasks = componentMeta.map(async (meta) => await this.importCom(meta, factoryMap));
+        await Promise.all(tasks);
+        componentMeta.filter(resolveCondition || this.resolveCondition).forEach(meta => {
+            const instance = meta.resolvedClass.create(meta, meta._parent?.instance?.ele ?? this.env);
+            instance.render(meta, meta?._parent?.env);
+        });
+    }
+
+    resolveCondition(x) {
+        return x._parent == null || !x._parent.customResolve;
     }
 
     importCom(meta, factoryMap) {
@@ -81,10 +95,9 @@ export default class Base {
     }
 
     setEleFromTemplate() {
-        if (this.meta.selector) {
-            this.ele = this.env.querySelector(this.meta.selector);
-            this.events.DOMContentLoaded.forEach(action => action.call(this, this));
-        }
+        if (this.meta.selector == null) return;
+        this.ele = this.env.querySelector(this.meta.selector);
+        this.events.DOMContentLoaded.forEach(action => action.call(this, this));
     }
 
     updateView() {
@@ -131,8 +144,8 @@ export default class Base {
 
     async loadTemplate(meta) {
         if (meta == null || !meta.length) return;
-        const templates = meta.filter(x => x.templateUrl != null).map(async x => {
-            x.template = await Utils.fetchText(x.templateUrl);
+        const templates = meta.filter(x => x.templateUrl != null || x.template?.url != null).map(async x => {
+            x.template = await Utils.fetchText(x.templateUrl || x.template?.url);
         });
         await Promise.all(templates);
     }
@@ -144,6 +157,12 @@ export default class Base {
         if (this.parentEle != null && meta.clearParent) {
             this.parentEle.innerHTML = null;
         }
+    }
+
+    addChild(child, ) {
+        this.children.push(child);
+        if (child.parent == null) child.parent = this;
+        child.render(child.meta, this.ele);
     }
 
     static create(meta, env) { return new Base(meta, env); }

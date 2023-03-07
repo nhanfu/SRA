@@ -7,7 +7,7 @@ export default class Input extends Base {
         super(meta, env);
     }
 
-    render(meta) {
+    preRender(meta) {
         this.renderInput(meta);
     }
 
