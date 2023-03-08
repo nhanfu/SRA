@@ -144,10 +144,12 @@ export default class Base {
 
     async loadTemplate(meta) {
         if (meta == null || !meta.length) return;
-        const templates = meta.filter(x => x.templateUrl != null || x.template?.url != null).map(async x => {
+        const templates = meta.filter(x => x.templateUrl != null || x.template?.url != null);
+        if (templates.length === 0) return;
+        const tasks = templates.map(async x => {
             x.template = await Utils.fetchText(x.templateUrl || x.template?.url);
         });
-        await Promise.all(templates);
+        await Promise.all(tasks);
     }
 
     setParentEle(meta) {
