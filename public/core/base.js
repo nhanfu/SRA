@@ -29,23 +29,24 @@ export default class Base {
         this.validationRules = [];
     }
 
-    async preRender(meta) {
+    preRender(meta) {
         this.setEleFromTemplate();
-        await this.resolveChildren(meta);
     }
 
-    render(meta) { }
+    async render(meta) { 
+        await this.renderChildren(meta);
+    }
 
-    async resolveChildren(meta, childrenMap, resolveCondition) {
-        if (meta == null) return;
+    async renderChildren(meta, childrenMap, resolveCondition) {
+        if (meta == null || !meta.children?.length) return;
         if (!childrenMap) childrenMap = x => x.children;
         const factoryMap = {};
         const componentMeta = Utils.flattern(meta.children, childrenMap, (parent, child) => child._parent = parent);
         meta.children.forEach(x => x._parent = meta);
         componentMeta.splice(0, 0, meta);
         componentMeta.forEach(meta => {
-            if (meta._parent == null || !Utils.isNoU(meta.customResolve)) return;
-            meta.customResolve = meta._parent.customResolve;
+            if (meta._parent == null || !Utils.isNoU(meta.lazyLoad)) return;
+            meta.lazyLoad = meta._parent.lazyLoad;
         });
         await this.loadTemplate(componentMeta);
         const tasks = componentMeta.map(async (meta) => await this.importCom(meta, factoryMap));
@@ -57,7 +58,7 @@ export default class Base {
     }
 
     resolveCondition(x) {
-        return x._parent == null || !x._parent.customResolve;
+        return x._parent == null || !x._parent.lazyLoad;
     }
 
     importCom(meta, factoryMap) {

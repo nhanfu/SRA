@@ -7,4 +7,5 @@ class Dashboard extends Base {
     }
 }
 
-new Dashboard();
+const bl = new Dashboard();
+bl.render(bl.meta);

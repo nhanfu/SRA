@@ -7,4 +7,5 @@ export class Login extends Base {
     }
 }
 
-new Login();
+const login = new Login();
+await login.render(login.meta);

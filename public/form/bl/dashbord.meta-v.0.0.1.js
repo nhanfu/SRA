@@ -34,7 +34,7 @@ const meta = [
                 }
             ]
         },
-        customResolve: true,
+        lazyLoad: true,
         children: [
             {
                 com: '../core/div-v0.0.1.js',

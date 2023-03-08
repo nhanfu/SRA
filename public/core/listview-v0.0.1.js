@@ -5,10 +5,6 @@ export default class ListView extends Base {
         super(meta, env);
     }
 
-    preRender(meta) {
-        this.setEleFromTemplate();
-    }
-
     async render(meta) {
         if (this.ele == null) return;
         this.ele.innerHTML = null;
@@ -21,7 +17,7 @@ export default class ListView extends Base {
                 wrapper.parent = this;
                 wrapper.parentEle = this.ele;
                 this.addChild(wrapper);
-                wrapper.resolveChildren(meta, x => x.children, x => true);
+                wrapper.renderChildren(meta, x => x.children, x => true);
             });
         });
     }
