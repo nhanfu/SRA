@@ -1,0 +1,506 @@
+.menu {
+}
+
+.icon-menu {
+  cursor: pointer;
+}
+
+.main-content {
+  height: 985px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/bg.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  margin: 0;
+  position: relative;
+}
+
+.form-code {
+  width: 430px;
+  min-height: 500px;
+  background-color: white;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  padding: 60px 55px;
+}
+.form-code img {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+
+.code-input {
+  width: 100%;
+  height: 65px;
+  padding: 23px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  border: 1px solid rgba(218, 224, 241, 1);
+}
+.code-input {
+  margin-bottom: 25px;
+}
+.submit-icon {
+  width: 24px !important;
+  margin: 0 !important;
+  margin-right: 10px !important;
+}
+button.submit-form {
+  width: 100%;
+  height: 65px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  background: rgba(12, 62, 225, 1);
+  color: white;
+  border: none;
+  text-transform: uppercase;
+}
+
+.navbar-toggler.menu {
+  border: none;
+}
+.navbar-toggler.menu:focus {
+  text-decoration: none;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.footer {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #001652;
+  padding: 14px;
+}
+.name-company {
+  font-weight: 700;
+}
+
+.policy-item:not(:last-child) {
+  border-right: 1px solid #001652;
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.text-policy {
+  width: fit-content;
+  margin: auto;
+}
+
+.check-rule {
+  position: absolute;
+  bottom: 40px;
+  right: 50px;
+}
+
+.user-info .form-code {
+  width: 1080px;
+}
+
+.title-form {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 22px;
+  /* identical to box height, or 100% */
+  letter-spacing: 0.2px;
+  color: #1b1926;
+}
+.title-form img {
+  width: 28px;
+  margin: 0;
+  margin-right: 10px;
+}
+.table-info {
+  border: 1px solid #dae0f1;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  margin-bottom: 36px;
+  padding: 25px 20px;
+}
+.title-table {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  color: #5d607b;
+  margin-right: 10px;
+  width: fit-content;
+}
+.bill-info {
+  /* height: 160px; */
+  border: 1px solid #dae0f1;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  padding: 25px 25px;
+  margin-bottom: 20px;
+}
+input.checkbox-bill {
+  width: 20px;
+  height: 20px;
+}
+.title-form {
+  margin-bottom: 25px;
+}
+
+.bill-content p {
+  margin: 0;
+}
+
+.bill-price {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  /* or 156% */
+  text-align: right;
+  color: #1b1926;
+}
+
+.check-rule {
+  width: 100px;
+}
+.check-rule img {
+  width: 100%;
+  margin: 0;
+}
+.total-payment {
+  background: #f5f5f5;
+  border: 1px solid #dae0f1;
+  border-radius: 20px;
+  padding: 25px 40px;
+  margin-bottom: 25px;
+}
+.total-payment p {
+  margin: 0;
+}
+.dash {
+  height: 1px;
+  background: rgba(218, 224, 241, 1);
+}
+.button-nav .button {
+  text-transform: uppercase;
+  padding: 18px 25px;
+  gap: 5px;
+  cursor: pointer;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+}
+.button-nav img {
+  width: 8px;
+  margin: 0;
+}
+.button-nav {
+  margin-top: 25px;
+}
+.policy-rule {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 25px;
+  /* or 179% */
+  text-align: center;
+  color: #1b1926;
+  cursor: pointer;
+}
+.next-btn {
+  background-color: #415bef;
+  color: white;
+}
+
+.option-payment {
+  cursor: pointer;
+}
+
+.table-info .card {
+  border: none;
+}
+.card-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  color: #1b1926;
+}
+.list-card img {
+  width: 130px;
+  margin: 0;
+  cursor: pointer;
+}
+.list-card {
+  gap: 25px;
+}
+.option-payment[aria-expanded="true"] .icon {
+  width: 20px;
+  height: 20px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/down.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.table-info.show.collapse .icon {
+  width: 20px;
+  height: 20px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/up.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.bill_input {
+  padding: 25px;
+  border: 1px solid #dae0f1;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  padding: 25px 25px;
+}
+
+.info-card img {
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  margin-right: 5px;
+}
+.payment-step2 .bill_input:not(:first-child) {
+  margin-top: 20px;
+}
+.error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  /* or 156% */
+  margin-top: 25px;
+
+  color: #db1313;
+}
+
+.payment-step2 .form-code {
+  /*max-height: 700px;
+  overflow: scroll; */
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.payment-step2 .form-code {
+  padding: 20px !important;
+}
+.payment-step2 .button-nav {
+  /* border-top: 1px solid #dae0f1; */
+  padding: 0 55px;
+  margin: 0;
+  padding-top: 10px;
+}
+.scroll {
+  overflow: scroll;
+  padding: 0 55px;
+}
+.payment-step2 .dash {
+  margin: 0 55px;
+}
+
+.success-page .form-code {
+  height: 700px;
+}
+
+.box-bill {
+  width: 410px;
+  border-radius: 20px;
+  border: 1px solid #dae0f1;
+  margin: auto;
+  margin-top: 35px;
+}
+.box-bill .rowbill {
+  padding: 10px 30px;
+  text-align: start;
+}
+.box-bill .rowbill:not(:last-child) {
+  border-bottom: 1px solid #dae0f1;
+}
+
+.homesuccess {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  background: #415bef;
+  border-radius: 20px;
+  width: 215px;
+  margin: auto;
+  color: white;
+}
+.homesuccess img {
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  margin-right: 5px;
+}
+.success-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 25px;
+  /* or 114% */
+
+  text-align: center;
+
+  color: #1b1926;
+}
+
+.sub-success {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  /* or 156% */
+
+  text-align: center;
+  margin-top: 22px;
+  color: #1b1926;
+}
+
+.fail-page .homesuccess {
+  margin-top: 30px;
+  background: transparent;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #415bef;
+  color: #415bef;
+}
+.fail-page .homesuccess img {
+  width: 10px;
+  height: 20px;
+}
+
+.contact-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 25px;
+  /* or 179% */
+
+  text-align: center;
+  margin-top: 10px;
+  color: #1b1926;
+}
+.fail-page .form-code img {
+  margin-bottom: 0;
+}
+/* .main-content {
+  background: #f9f9f9;
+} */
+
+.not_bg.main-content {
+  background: #f9f9f9 !important;
+}
+.page-404 .main-content .content {
+  width: 75%;
+  height: 316px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/404.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: column;
+  position: relative;
+  margin-top: -200px !important;
+}
+
+.page-404-otp2 .main-content .content, .page-501 .main-content .content, .page-501-otp2 .main-content .content {
+  margin-top: -200px !important;
+}
+/* 
+.text-content {
+  position: absolute;
+  bottom: -100px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  flex-direction: column;
+} */
+.text-noti {
+  margin: 0 !important;
+  text-align: center;
+  margin-top: 10px !important;
+}
+.home-btn img {
+  margin-right: 5px;
+}
+.home-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  background: #415bef;
+  border-radius: 20px;
+  width: 215px;
+  margin: auto;
+  color: white;
+  margin-top: 20px !important;
+
+  margin-bottom: 0 !important;
+}
+.main-content {
+  flex-direction: column;
+}
+.main-content .content {
+  margin-top: 50px;
+}
+
+.page-501 .main-content .content {
+  width: 75%;
+
+  height: 316px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/_501.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: column;
+  position: relative;
+  margin-top: 100px;
+}
+
+.page-404-otp2 .main-content .content {
+  width: 75%;
+  height: 480px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/robot_404_2.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: column;
+  position: relative;
+  margin-top: 100px;
+}
+
+.page-501-otp2 .main-content .content {
+  width: 75%;
+  height: 480px;
+  background: url("https://hcm01.vstorage.vngcloud.vn/v1/AUTH_77c1e15122904b63990a9da99711590d/LXP_Media/skins/form_payment/_501_otp2.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: column;
+  position: relative;
+  margin-top: 100px;
+}

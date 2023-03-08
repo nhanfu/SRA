@@ -28,8 +28,10 @@ export default class Base {
         this.events.userInput = [];
         this.validationRules = [];
     }
-
-    preRender(meta) {
+    
+    async preRender(meta) {
+        await this.setLayout();
+        await this.setView();
         this.setEleFromTemplate();
     }
 
@@ -103,6 +105,19 @@ export default class Base {
         this.events.DOMContentLoaded.forEach(action => action.call(this, this));
     }
 
+    async setLayout() {
+        if (this.meta.layout == null) return;
+        var template = await Utils.fetchText(this.meta.layout.url);
+        document.body.innerHTML = template;
+    }
+
+    async setView() {
+        if (this.meta.view == null) return;
+        this.ele = this.env.querySelector(this.meta.selector);
+        var template = await Utils.fetchText(this.meta.view);
+        this.ele.innerHTML = template;
+    }
+
     updateView() {
         const children = Utils.flattern(this.children, x => x.children);
         if (children == null || !children.length) return;
@@ -164,7 +179,7 @@ export default class Base {
         }
     }
 
-    addChild(child, ) {
+    addChild(child,) {
         this.children.push(child);
         if (child.parent == null) child.parent = this;
         child.render(child.meta, this.ele);
