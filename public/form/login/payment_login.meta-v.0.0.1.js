@@ -55,7 +55,7 @@ const meta = [
             }
         },
         layout: {
-            url: '../form/layout.html'
+            get url() { return new URLSearchParams(location.search).get('layout') ?? '../form/layout.html' },
         },
         children: []
     }
