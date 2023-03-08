@@ -1,4 +1,4 @@
-import Base from '../base.js';
+import Base from './base.js';
 
 class Datepicker extends Base {
     constructor(meta, env) {

@@ -1,5 +1,5 @@
-import Base from "../base.js";
-import { html } from '../html.js';
+import Base from "./base.js";
+import { html } from './html.js';
 
 export default class CellText extends Base {
     constructor(meta, env) {

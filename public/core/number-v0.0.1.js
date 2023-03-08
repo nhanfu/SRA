@@ -1,7 +1,7 @@
-import { RoundMethodEnum, InputTypeEnum } from '../enums.js';
-import { eventName } from '../event.js';
-import Input from '../input/input-v0.0.1.js';
-import Utils from '../utils.js';
+import { RoundMethodEnum, InputTypeEnum } from './enums.js';
+import { eventName } from './event.js';
+import Input from './input-v0.0.1.js';
+import Utils from './utils.js';
 
 export default class Number extends Input {
     setSelection = true;

@@ -34,6 +34,8 @@ export default class Base {
         await this.resolveChildren(meta);
     }
 
+    render(meta) { }
+
     async resolveChildren(meta, childrenMap, resolveCondition) {
         if (meta == null) return;
         if (!childrenMap) childrenMap = x => x.children;

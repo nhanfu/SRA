@@ -1,7 +1,7 @@
 const meta = [
     {
         id: 'root',
-        com: '../core/div/div-v0.0.1.js',
+        com: '../core/div-v0.0.1.js',
         selector: 'main section',
         field: 'form',
         entity: { email: 'nhannguyen@abc.com', password: '123456', code: 'ahihi' },
@@ -10,21 +10,21 @@ const meta = [
         },
         children: [
             {
-                com: '../core/div/div-v0.0.1.js',
+                com: '../core/div-v0.0.1.js',
                 field: 'form',
                 parentSelector: 'footer',
                 clearParent: true,
                 templateUrl: './simple.html',
                 children: [
                     {
-                        com: '../core/input/input-v0.0.1.js',
+                        com: '../core/input-v0.0.1.js',
                         selector: '#code',
                         field: 'code'
                     },
                 ]
             },
             {
-                com: '../core/number/number-v0.0.1.js',
+                com: '../core/number-v0.0.1.js',
                 field: 'test',
                 precision: 2,
                 defaultVal: (arg) => {
@@ -37,7 +37,7 @@ const meta = [
                 }
             },
             {
-                com: '../core/input/input-v0.0.1.js',
+                com: '../core/input-v0.0.1.js',
                 selector: '#email',
                 field: 'email',
                 events: {
@@ -47,7 +47,7 @@ const meta = [
                 }
             },
             {
-                com: '../core/input/input-v0.0.1.js',
+                com: '../core/input-v0.0.1.js',
                 selector: '#password',
                 field: 'password',
                 type: 'password',
@@ -58,7 +58,7 @@ const meta = [
                 }
             },
             {
-                com: '../core/input/input-v0.0.1.js',
+                com: '../core/input-v0.0.1.js',
                 selector: '#rememberMe',
                 field: 'rememberme',
                 type: 'checkbox',
@@ -70,7 +70,7 @@ const meta = [
                 }
             },
             {
-                com: '../core/button/button-v0.0.1.js',
+                com: '../core/button-v0.0.1.js',
                 selector: '#submit',
                 events: {
                     click: (arg) => {

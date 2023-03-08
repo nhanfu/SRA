@@ -1,6 +1,6 @@
 const meta = [
     {
-        com: '../core/listview/listview-v0.0.1.js',
+        com: '../core/listview-v0.0.1.js',
         selector: '#overview',
         field: 'overview',
         template: {
@@ -37,21 +37,21 @@ const meta = [
         customResolve: true,
         children: [
             {
-                com: '../core/div/div-v0.0.1.js',
+                com: '../core/div-v0.0.1.js',
                 field: 'overview',
                 template: {
                     url: '../form/bl/overview.html'
                 },
                 children: [
                     {
-                        com: '../core/celltext/celltext-v0.0.1.js',
+                        com: '../core/celltext-v0.0.1.js',
                         field: 'title',
                         events: {
                             click: (args) => alert(`User just click on ${args.com.entity.title}`)
                         },
                     },
                     {
-                        com: '../core/celltext/celltext-v0.0.1.js',
+                        com: '../core/celltext-v0.0.1.js',
                         field: 'change',
                         events: {
                             click: (args) => alert(`User just click on ${args.com.entity.change}`)

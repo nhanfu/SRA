@@ -1,13 +1,13 @@
-import { html } from '../html.js';
-import Base from '../base.js';
-import { eventName } from '../event.js';
+import { html } from './html.js';
+import Base from './base.js';
+import { eventName } from './event.js';
 
 export default class Button extends Base {
     constructor(meta, env) {
         super(meta, env);
     }
 
-    render() {
+    preRender() {
         const meta = this.meta;
         if (meta.selector != null) {
             this.setEleFromTemplate();

@@ -1,4 +1,4 @@
-import Base from "../base.js";
+import Base from "./base.js";
 
 export default class ListView extends Base {
     constructor(meta, env) {
