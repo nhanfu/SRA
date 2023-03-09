@@ -69,25 +69,28 @@ export default class HttpServer {
         });
     }
 
+    static extMap = {
+        '.ico': 'image/x-icon',
+        '.html': 'text/html',
+        '.js': 'text/javascript',
+        '.json': 'application/json',
+        '.css': 'text/css',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.wav': 'audio/wav',
+        '.mp3': 'audio/mpeg',
+        '.svg': 'image/svg+xml',
+        '.pdf': 'application/pdf',
+        '.doc': 'application/msword'
+    };
+
     resolveFile(req, res) {
         const parsedUrl = url.parse(req.url);
         if (parsedUrl.pathname === '' || parsedUrl.pathname === '/') return false;
         let pathname = path.join(folder, parsedUrl.pathname);
         const ext = path.parse(pathname).ext;
-        const map = {
-            '.ico': 'image/x-icon',
-            '.html': 'text/html',
-            '.js': 'text/javascript',
-            '.json': 'application/json',
-            '.css': 'text/css',
-            '.png': 'image/png',
-            '.jpg': 'image/jpeg',
-            '.wav': 'audio/wav',
-            '.mp3': 'audio/mpeg',
-            '.svg': 'image/svg+xml',
-            '.pdf': 'application/pdf',
-            '.doc': 'application/msword'
-        };
+        const contentType = HttpServer.extMap[ext];
+        if (!ext || !contentType) return false;
         return new Promise((resolve, reject) => {
             _logger.info(pathname);
             readFile(pathname, function (err, data) {
@@ -98,7 +101,7 @@ export default class HttpServer {
                     }
                     resolve(false);
                 } else {
-                    res.setHeader('Content-type', map[ext] || 'text/plain');
+                    res.setHeader('Content-type', contentType || 'text/plain');
                     res.end(data);
                     resolve(true);
                 }
