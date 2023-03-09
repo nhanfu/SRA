@@ -4,7 +4,7 @@ const meta = [
         com: '../core/div-v0.0.1.js',
         selector: 'main section',
         field: 'form',
-        entity: { email: 'nhannguyen@abc.com', password: '123456', code: 'ahihi' },
+        entity: { email: 'nhannguyen@vus-etsc.edu.vn', password: '123456', code: 'ahihi' },
         events: {
             DOMContentLoaded: (args) => console.log(`The DOM element is ready`)
         },
