@@ -92,7 +92,7 @@ export default class HttpServer {
             _logger.info(pathname);
             readFile(pathname, function (err, data) {
                 if (err) {
-                    if (ext != null) {
+                    if (ext && ext.length) {
                         res.statusCode = 500;
                         res.end(`Error getting the file: ${pathname}.`);
                     }
@@ -108,13 +108,14 @@ export default class HttpServer {
 
     async invokeService(path, arg, s) {
         if (path == null) throw new Error('Path is required');
-        const fn = require('./services/' + path);
+        const fn = await import('../services/' + path + '.js');
         if (fn == null) {
             const err = new Error('Service not found');
             err.status = 404;
             throw err;
         }
-        const res = fn.call(this, arg == null ? null : arg.entity || arg.Entity, arg);
+        const method = fn.default ? fn.default : fn;
+        const res = method(this, arg == null ? null : arg.entity || arg.Entity, arg);
         const final = res instanceof Promise ? (await res) : typeof (res) == 'string' ? res : JSON.stringify(res) || 'Ok';
         return final;
     }
