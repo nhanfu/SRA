@@ -122,7 +122,7 @@ export default class HttpServer {
             throw err;
         }
         const method = fn.default ? fn.default : fn;
-        const result = method(this, req, res, arg == null ? null : arg.entity || arg.Entity, arg);
+        const result = method.call(null, req, res, arg);
         const final = result instanceof Promise ? (await result) : result;
         return final;
     }
