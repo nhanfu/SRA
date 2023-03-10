@@ -1,6 +1,6 @@
 import http from 'http';
 import url from 'url';
-import svRunner from '../services/svRunner.js';
+import svRunner from '../api/svRunner.js';
 import Sqlite from '../sql/sqlite.js';
 import path from 'path';
 import { readFile } from 'fs';
@@ -56,7 +56,11 @@ export default class HttpServer {
                 const arg = this.tryParseBody(body);
                 const path = arg && arg.path || uri.pathname;
                 if (path && path != '/') {
-                    const result = await this.invokeService(path, arg, res);
+                    const result = await this.invokeService(path, arg, req, res);
+                    if (res.writableEnded) return;
+                    if (!res.getHeader('content-type')) {
+                        res.setHeader('content-type', 'application/json');
+                    }
                     this.writeStream(res, 200, typeof (result) === 'string' ? result : JSON.stringify(result));
                 }
                 else {
@@ -109,17 +113,17 @@ export default class HttpServer {
         });
     }
 
-    async invokeService(path, arg, s) {
+    async invokeService(path, arg, req, res) {
         if (path == null) throw new Error('Path is required');
-        const fn = await import('../services/' + path + '.js');
+        const fn = await import('../api/' + path + '.js');
         if (fn == null) {
             const err = new Error('Service not found');
             err.status = 404;
             throw err;
         }
         const method = fn.default ? fn.default : fn;
-        const res = method(this, arg == null ? null : arg.entity || arg.Entity, arg);
-        const final = res instanceof Promise ? (await res) : typeof (res) == 'string' ? res : JSON.stringify(res) || 'Ok';
+        const result = method(this, req, res, arg == null ? null : arg.entity || arg.Entity, arg);
+        const final = result instanceof Promise ? (await result) : result;
         return final;
     }
 
