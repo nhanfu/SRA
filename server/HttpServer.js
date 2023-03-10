@@ -38,8 +38,11 @@ export default class HttpServer {
         };
 
         this.server = this.http.createServer(requestListener);
-        this.server.listen(process.env.PORT || conf.port, conf.host, () => {
-            console.log(`Server is running on http://${conf.host}:${conf.port}`);
+
+        const host = process.env.HOST || '0.0.0.0';
+        const port = process.env.PORT || conf.port;
+        this.server.listen(port, host, () => {
+            console.log(`Server is running on http://${host}:${port}`);
         });
     }
 
