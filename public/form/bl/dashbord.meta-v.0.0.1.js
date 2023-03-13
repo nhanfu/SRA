@@ -3,9 +3,6 @@ const meta = [
         com: '../core/listview-v0.0.1.js',
         selector: '#overview',
         field: 'overview',
-        template: {
-            url: '../form/bl/overview.html'
-        },
         entity: {
             overview: [
                 {
@@ -39,6 +36,7 @@ const meta = [
             {
                 com: '../core/div-v0.0.1.js',
                 field: 'overview',
+                lazyLoad: true,
                 template: {
                     url: '../form/bl/overview.html'
                 },

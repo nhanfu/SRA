@@ -6,18 +6,19 @@ export default class ListView extends Base {
     }
 
     async render(meta) {
-        if (this.ele == null) return;
+        if (this.ele == null && meta.selector) {
+            this.setEleFromTemplate();
+        };
         this.ele.innerHTML = null;
         await this.loadData(meta);
         const rows = meta.entity[meta.field];
         rows.forEach(rowData => {
-            meta.children.forEach(detailMeta => {
+            meta.children.forEach(async detailMeta => {
                 detailMeta.entity = rowData;
                 const wrapper = detailMeta.resolvedClass.create(detailMeta, this.ele);
                 wrapper.parent = this;
                 wrapper.parentEle = this.ele;
                 this.addChild(wrapper);
-                wrapper.renderChildren(meta, x => x.children, x => true);
             });
         });
     }

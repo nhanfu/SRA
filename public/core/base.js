@@ -10,9 +10,6 @@ export default class Base {
         this.meta = Array.isArray(meta) ? meta[0] : meta;
         this.meta.instance = this;
         this.parent = this.meta._parent != null ? this.meta._parent.instance : null;
-        if (this.parent != null) {
-            this.parent.children.push(this);
-        }
         this.entity = this.meta.entity || this.parent?.entity;
         this.env = env || document.body;
         this.children = [];
@@ -160,12 +157,12 @@ export default class Base {
         this.entity[this.meta.field] = this.meta.defaultVal(this);
     }
 
-    async loadTemplate(meta) {
-        if (meta == null || !meta.length) return;
-        const templates = meta.filter(x => x.templateUrl != null || x.template?.url != null);
+    async loadTemplate(metaArr) {
+        if (metaArr == null || !metaArr.length) return;
+        const templates = metaArr.filter(x => x.templateUrl != null || x.template?.url != null);
         if (templates.length === 0) return;
         const tasks = templates.map(async x => {
-            x.template = await Utils.fetchText(x.templateUrl || x.template?.url);
+            x.template.html = await Utils.fetchText(x.template?.url);
         });
         await Promise.all(tasks);
     }
@@ -179,10 +176,10 @@ export default class Base {
         }
     }
 
-    addChild(child,) {
+    async addChild(child,) {
         this.children.push(child);
         if (child.parent == null) child.parent = this;
-        child.render(child.meta, this.ele);
+        await child.render(child.meta, this.ele);
     }
 
     static create(meta, env) { return new Base(meta, env); }

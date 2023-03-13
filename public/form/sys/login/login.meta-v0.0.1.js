@@ -14,7 +14,7 @@ const meta = [
                 field: 'form',
                 parentSelector: 'footer',
                 clearParent: true,
-                templateUrl: './simple.html',
+                template: { url: './simple.html' },
                 children: [
                     {
                         com: '../core/input-v0.0.1.js',

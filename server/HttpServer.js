@@ -14,10 +14,8 @@ export default class HttpServer {
     constructor() {
         this.http = http;
         this.url = url;
-        this.SvRunner = svRunner;;
         this.db = Sqlite.connect();
-        this.svRunner = new this.SvRunner();
-        this.svRunner.run();
+        new svRunner().run();
     }
 
     static autoStart() {

@@ -20,7 +20,7 @@ export default class Div extends Base {
         }
     }
 
-    render(meta) {
+    async render(meta) {
         if (this.parentEle == null) return;
         const div = this.innerDOM;
         const shouldWrap = div.childElementCount > 1;
@@ -34,6 +34,12 @@ export default class Div extends Base {
         if (meta.selector != null) {
             this.setEleFromTemplate();
         }
+        if (meta.lazyLoad) {
+            meta.children.forEach(async meta => {
+                const instance = meta.resolvedClass.create(meta, meta._parent?.instance?.ele ?? this.env);
+                await this.addChild(instance);
+            });
+        }
     }
 
     bindEvents(meta) {
@@ -44,7 +50,7 @@ export default class Div extends Base {
     renderFromTemplate(meta) {
         if (meta.template == null) return;
         const div = document.createElement('div');
-        div.innerHTML = meta.template;
+        div.innerHTML = meta.template.html;
         if (div.childElementCount == 0) return;
         this.innerDOM = div;
     }

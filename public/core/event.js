@@ -109,7 +109,7 @@ class DOMEvent {
     }
 
     async invoke(name, meta, com) {
-        if (!name || !meta || !meta.events[name]) return;
+        if (!name || !meta || !meta.events || !meta.events[name]) return;
         await meta.events[name].call(com, com);
     }
 }
